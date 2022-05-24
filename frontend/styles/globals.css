@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Passion+One&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-family: 'Open Sans', sans-serif;
+  --clr-light: #f0e9e9;
+  --clr-purple: #7b1fa2;
+  --clr-pink: #c2185b;
+  --clr-yellow: #fbc02d;
+  --clr-blue: #1976d2;
+  --clr-green: #388e3c;
+  --clr-selection-bg: #cb3d92;
+  --clr-selection-text: #f4f0f0;
+  --clr-background: #06070a;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-family);
+  background: var(--clr-background);
+}
+
+::selection {
+  background: var(--clr-selection-bg);
+  color: var(--clr-selection-text);
+}
