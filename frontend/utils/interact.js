@@ -1,14 +1,10 @@
 const { createAlchemyWeb3 } = require('@alch/alchemy-web3')
-<<<<<<< HEAD
-const web3 = createAlchemyWeb3(process.env.NEXT_PUBLIC_ALCHEMY_POLYGON_RPC_URL)
-=======
 const web3Poly = createAlchemyWeb3(
   process.env.NEXT_PUBLIC_ALCHEMY_POLYGON_RPC_URL
 )
 const web3Eth = createAlchemyWeb3(
   process.env.NEXT_PUBLIC_ALCHEMY_ETHEREUM_RPC_URL
 )
->>>>>>> @{-1}
 import { config } from '../dapp.config'
 const contractPoly = require('../artifacts/contracts/polygon/TinyBears.sol/TinyBears.json')
 const contractEth = require('../artifacts/contracts/ethereum/TinyBears.sol/TinyBears.json')
