@@ -2,30 +2,30 @@ const { createAlchemyWeb3 } = require('@alch/alchemy-web3')
 const web3Poly = createAlchemyWeb3(
   process.env.NEXT_PUBLIC_ALCHEMY_POLYGON_RPC_URL
 )
-const web3Eth = createAlchemyWeb3(
-  process.env.NEXT_PUBLIC_ALCHEMY_ETHEREUM_RPC_URL
-)
+// const web3Eth = createAlchemyWeb3(
+//   process.env.NEXT_PUBLIC_ALCHEMY_ETHEREUM_RPC_URL
+// )
 import { config } from '../dapp.config'
 const contractPoly = require('../artifacts/contracts/polygon/TinyBears.sol/TinyBears.json')
-const contractEth = require('../artifacts/contracts/ethereum/TinyBears.sol/TinyBears.json')
+// const contractEth = require('../artifacts/contracts/ethereum/TinyBears.sol/TinyBears.json')
 const nftContractPoly = new web3Poly.eth.Contract(
   contractPoly.abi,
   config.contractAddressPoly
 )
-const nftContractEth = new web3Eth.eth.Contract(
-  contractEth.abi,
-  config.contractAddressEth
-)
+// const nftContractEth = new web3Eth.eth.Contract(
+//   contractEth.abi,
+//   config.contractAddressEth
+// )
 
 export const getTotalMintedPoly = async () => {
   const totalMinted = await nftContractPoly.methods.currentTokenId().call()
   return totalMinted
 }
 
-export const getTotalMintedEth = async () => {
-  const totalMinted = await nftContractEth.methods.currentTokenId().call()
-  return totalMinted
-}
+// export const getTotalMintedEth = async () => {
+//   const totalMinted = await nftContractEth.methods.currentTokenId().call()
+//   return totalMinted
+// }
 
 export const getBalanceOfPoly = async () => {
   const balanceOf = await nftContractPoly.methods
@@ -34,22 +34,22 @@ export const getBalanceOfPoly = async () => {
   return balanceOf
 }
 
-export const getBalanceOfEth = async () => {
-  const balanceOf = await nftContractEth.methods
-    .balanceOf(window.ethereum.selectedAddress)
-    .call()
-  return balanceOf
-}
+// export const getBalanceOfEth = async () => {
+//   const balanceOf = await nftContractEth.methods
+//     .balanceOf(window.ethereum.selectedAddress)
+//     .call()
+//   return balanceOf
+// }
 
 export const isPausedStatePoly = async () => {
   const paused = await nftContractPoly.methods.paused().call()
   return paused
 }
 
-export const isPausedStateEth = async () => {
-  const paused = await nftContractEth.methods.paused().call()
-  return paused
-}
+// export const isPausedStateEth = async () => {
+//   const paused = await nftContractEth.methods.paused().call()
+//   return paused
+// }
 
 export const mintPoly = async () => {
   if (!window.ethereum.selectedAddress) {
