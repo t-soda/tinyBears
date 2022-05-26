@@ -3,7 +3,7 @@ import injectedModule from '@web3-onboard/injected-wallets'
 import walletConnectModule from '@web3-onboard/walletconnect'
 import tinyBearsIcon from '../tinyBearsSvg'
 
-const RPC_URL = process.env.NEXT_PUBLIC_ALCHEMY_RPC_URL
+const RPC_URL = process.env.NEXT_PUBLIC_ALCHEMY_POLYGON_RPC_URL
 
 const injected = injectedModule()
 const walletConnect = walletConnectModule()
@@ -33,7 +33,7 @@ const web3Onboard = init({
       id: '0x89',
       token: 'MATIC',
       label: 'Matic Mainnet',
-      rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+      rpcUrl: RPC_URL
     }
   ],
   appMetadata: {

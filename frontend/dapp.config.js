@@ -2,7 +2,7 @@ const config = {
   title: 'tiny bears',
   description: 'tiny bears are running around the meadow today.',
   price: 0,
-  contractAddress: '0xd7dEa66DfB5d4F475A0aAeBD2BD57D712859379c'
+  contractAddress: '0xE4a0D3552aa32e4D7c7f0A49B00ec8951de2c80C'
 }
 
 export { config }

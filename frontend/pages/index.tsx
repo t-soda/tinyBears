@@ -33,7 +33,7 @@ const Anime = ({
 
   useEffect(() => {
     setImageUrl(
-      `https://gateway.pinata.cloud/ipfs/QmdBfRpRrBFxq1wTKHZJjkBTZiNRBSAs4uGBMChMYsaJBe/${tokenId}.png`
+      `https://gateway.pinata.cloud/ipfs/QmRo9fH8bdmMnBTdRxnTeoRTY84zW4NG1UU3fNtriUUJoP/${tokenId}.png`
     )
   }, [])
 
@@ -47,7 +47,7 @@ const Anime = ({
     >
       <div className="w-full relative">
         <a
-          href={`https://testnets.opensea.io/assets/rinkeby/0x33fdc37fa09e670d4444a85bcd625137d0df3837/${tokenId}`}
+          href={`https://opensea.io/assets/matic/0xe4a0d3552aa32e4d7c7f0a49b00ec8951de2c80c/${tokenId}`}
           target="blank"
         >
           <div
@@ -212,7 +212,7 @@ const Mint = () => {
                       <span className="ml-2">
                         {('000' + totalMinted).slice(-3)}{' '}
                       </span>{' '}
-                      / 300
+                      / 250
                     </p>
                     <p className="text-gray-600 rounded-md flex flex-row items-center">
                       <Image
@@ -221,7 +221,7 @@ const Mint = () => {
                         width={20}
                         height={20}
                       />
-                      <span className="ml-2">000</span> / 200
+                      <span className="ml-2">000</span> / 250
                     </p>
                   </div>
                 </div>
