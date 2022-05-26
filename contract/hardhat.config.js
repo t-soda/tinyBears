@@ -28,6 +28,14 @@ module.exports = {
     },
   },
   networks: {
+    ethereum: {
+      url: `${process.env.NEXT_PUBLIC_ALCHEMY_ETHEREUM_RPC_URL}`,
+      accounts: [`0x${process.env.METAMASK_PRIVATE_KEY}`],
+    },
+    polygon: {
+      url: `${process.env.NEXT_PUBLIC_ALCHEMY_POLYGON_RPC_URL}`,
+      accounts: [`0x${process.env.METAMASK_PRIVATE_KEY}`],
+    },
     rinkeby: {
       url: `${process.env.NEXT_PUBLIC_ALCHEMY_RPC_URL}`,
       accounts: [`0x${process.env.METAMASK_PRIVATE_KEY}`],
@@ -48,6 +56,8 @@ module.exports = {
   },
   etherscan: {
     apiKey: {
+      ethereum: `${process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY}`,
+      polygon: `${process.env.NEXT_PUBLIC_POLYGONSCAN_API_KEY}`,
       rinkeby: `${process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY}`,
       bscTestnet: `${process.env.NEXT_PUBLIC_BNCSCAN_API_KEY}`,
     },

@@ -16,10 +16,10 @@ async function main() {
   // We get the contract to deploy
   const TinyBears = await hre.ethers.getContractFactory('TinyBears');
   const tinyBears = await TinyBears.deploy(
-    'ipfs://Qmb5A1fFECM2iFHgUioii2khT814nCi6VU9aHXHHqNxHCK/',
-    '0x6Fcb97553D41516Cb228ac03FdC8B9a0a9df04A1',
+    'ipfs://QmPSsYiC2cdy6GNBs5ytA8jYZLHFepkk852qbsf1WWXEdv/',
+    '0x3c2269811836af69497E5F486A85D7316753cf62',
     0,
-    300
+    250
   );
 
   await tinyBears.deployed();

@@ -1,13 +1,18 @@
 const { createAlchemyWeb3 } = require('@alch/alchemy-web3')
-const web3 = createAlchemyWeb3(process.env.NEXT_PUBLIC_ALCHEMY_RPC_URL)
+const web3Poly = createAlchemyWeb3(
+  process.env.NEXT_PUBLIC_ALCHEMY_POLYGON_RPC_URL
+)
+const web3Eth = createAlchemyWeb3(
+  process.env.NEXT_PUBLIC_ALCHEMY_ETHEREUM_RPC_URL
+)
 import { config } from '../dapp.config'
 const contractPoly = require('../artifacts/contracts/polygon/TinyBears.sol/TinyBears.json')
 const contractEth = require('../artifacts/contracts/ethereum/TinyBears.sol/TinyBears.json')
-const nftContractPoly = new web3.eth.Contract(
+const nftContractPoly = new web3Poly.eth.Contract(
   contractPoly.abi,
   config.contractAddressPoly
 )
-const nftContractEth = new web3.eth.Contract(
+const nftContractEth = new web3Eth.eth.Contract(
   contractEth.abi,
   config.contractAddressEth
 )
@@ -54,7 +59,7 @@ export const mintPoly = async () => {
     }
   }
 
-  const nonce = await web3.eth.getTransactionCount(
+  const nonce = await web3Poly.eth.getTransactionCount(
     window.ethereum.selectedAddress,
     'latest'
   )
@@ -63,7 +68,7 @@ export const mintPoly = async () => {
   const tx = {
     to: config.contractAddressPoly,
     from: window.ethereum.selectedAddress,
-    value: parseInt(web3.utils.toWei(String(0), 'ether')).toString(16), // hex
+    value: parseInt(web3Poly.utils.toWei(String(0), 'ether')).toString(16), // hex
     data: nftContractPoly.methods.mint(1).encodeABI(),
     nonce: nonce.toString(16)
   }
@@ -77,9 +82,9 @@ export const mintPoly = async () => {
     return {
       success: true,
       status: (
-        <a href={`https://rinkeby.etherscan.io/tx/${txHash}`} target="_blank">
-          <p>Check out your transaction on Polygonscan:</p>
-          <p>{`https://rinkeby.etherscan.io/tx/${txHash}`}</p>
+        <a href={`https://polygonscan.com/tx/${txHash}`} target="_blank">
+          <p>👇Check out your transaction on Polygonscan👇</p>
+          <p>{`https://polygonscan.com/tx/${txHash}`}</p>
         </a>
       )
     }
@@ -99,7 +104,7 @@ export const mintEth = async () => {
     }
   }
 
-  const nonce = await web3.eth.getTransactionCount(
+  const nonce = await web3Eth.eth.getTransactionCount(
     window.ethereum.selectedAddress,
     'latest'
   )
@@ -108,7 +113,7 @@ export const mintEth = async () => {
   const tx = {
     to: config.contractAddressEth,
     from: window.ethereum.selectedAddress,
-    value: parseInt(web3.utils.toWei(String(0), 'ether')).toString(16), // hex
+    value: parseInt(web3Eth.utils.toWei(String(0), 'ether')).toString(16), // hex
     data: nftContractPoly.methods.mint(1).encodeABI(),
     nonce: nonce.toString(16)
   }
@@ -123,7 +128,7 @@ export const mintEth = async () => {
       success: true,
       status: (
         <a href={`https://rinkeby.etherscan.io/tx/${txHash}`} target="_blank">
-          <p>Check out your transaction on Ethereumscan:</p>
+          <p>👇Check out your transaction on Ethereumscan👇</p>
           <p>{`https://rinkeby.etherscan.io/tx/${txHash}`}</p>
         </a>
       )

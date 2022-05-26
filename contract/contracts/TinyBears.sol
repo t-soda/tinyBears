@@ -900,6 +900,7 @@ contract TinyBears is Ownable, ERC721, NonblockingReceiver {
     uint256 MAX_OWNERSHIP = 2;
     string public baseExtension = ".json";
     uint256 gasForDestinationLzReceive = 350000;
+    bool public paused = false;
 
     constructor(string memory baseURI_, address _layerZeroEndpoint, uint256 _nextTokenId, uint256 _maxAmount)
         ERC721("tiny bears", "tb")
@@ -917,6 +918,7 @@ contract TinyBears is Ownable, ERC721, NonblockingReceiver {
             nextTokenId + numTokens <= maxAmount,
             "tiny bears: Mint exceeds supply for this network"
         );
+        require(!paused, "tiny bears: Contract is paused");
         for (uint8 i = 0; i < numTokens; i++) {
             _safeMint(msg.sender, ++nextTokenId);
         }
@@ -1005,5 +1007,9 @@ contract TinyBears is Ownable, ERC721, NonblockingReceiver {
 
     function currentTokenId() public view returns (uint) {
         return nextTokenId;
+    }
+
+    function togglePause() public onlyOwner {
+        paused = !paused;
     }
 }

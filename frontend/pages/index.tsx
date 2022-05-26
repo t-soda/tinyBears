@@ -37,7 +37,7 @@ const Anime = ({
 
   useEffect(() => {
     setImageUrl(
-      `https://gateway.pinata.cloud/ipfs/QmdBfRpRrBFxq1wTKHZJjkBTZiNRBSAs4uGBMChMYsaJBe/${tokenId}.png`
+      `https://gateway.pinata.cloud/ipfs/QmRo9fH8bdmMnBTdRxnTeoRTY84zW4NG1UU3fNtriUUJoP/${tokenId}.png`
     )
   }, [])
 
@@ -51,7 +51,7 @@ const Anime = ({
     >
       <div className="w-full relative">
         <a
-          href={`https://testnets.opensea.io/assets/rinkeby/0x33fdc37fa09e670d4444a85bcd625137d0df3837/${tokenId}`}
+          href={`https://opensea.io/assets/matic/0xe4a0d3552aa32e4d7c7f0a49b00ec8951de2c80c/${tokenId}`}
           target="blank"
         >
           <div
@@ -206,7 +206,7 @@ const Mint = () => {
           status.success ? 'border-green-500' : 'border-red-400 '
         } rounded-md text-start h-full px-4 py-4 w-full mx-auto mt-4`}
       >
-        <p className="flex flex-col space-y-2 text-gray-500 text-sm md:text-base break-words ...">
+        <p className="flex flex-col text-gray-500 md:text-base break-words ...">
           {status.message}
         </p>
       </div>
@@ -274,7 +274,7 @@ const Mint = () => {
                   </div>
                 </div>
                 {wallet ? (
-                  (pausedPoly || balanceOfPoly >= 2 ? (
+                  pausedPoly || balanceOfPoly >= 2 ? (
                     <button
                       className="mt-5 w-full bg-gradient-to-br from-gray-600 to-gray-800 shadow-lg px-6 py-3 text-sm rounded-md text-white tracking-wide cursor-default"
                       disabled={balanceOfPoly >= 2}
@@ -284,54 +284,19 @@ const Mint = () => {
                         : `You have already mint to the limit.`}
                     </button>
                   ) : (
-                    (
-                      <button
-                        className="mt-5 w-full bg-gradient-to-br from-brand-blue to-brand-green shadow-lg px-6 py-3 rounded-md text-2xl text-white hover:shadow-green-400/50 tracking-wide"
-                        disabled={balanceOfPoly >= 2}
-                        onClick={mintHandlerPoly}
-                      >
-                        <p className="text-2xl">
-                          {isMintingPoly ? 'Minting...' : 'FREE MINT'}
-                        </p>
-                        <span className="text-xs">
-                          (You pay the minting gas fee)
-                        </span>
-                      </button>
-                    ) && (
-                      <p className="text-gray-600 text-sm text-center">
-                        (You already minted {balanceOfPoly}/2)
-                      </p>
-                    )
-                  )) &&
-                  (pausedEth || balanceOfEth >= 2 ? (
                     <button
-                      className="mt-5 w-full bg-gradient-to-br from-gray-600 to-gray-800 shadow-lg px-6 py-3 text-sm rounded-md text-white tracking-wide cursor-default"
-                      disabled={balanceOfEth >= 2}
+                      className="mt-5 w-full bg-gradient-to-br from-brand-blue to-brand-green shadow-lg px-6 py-3 rounded-md text-2xl text-white hover:shadow-green-400/50 tracking-wide"
+                      disabled={balanceOfPoly >= 2}
+                      onClick={mintHandlerPoly}
                     >
-                      {pausedPoly
-                        ? `Mint is currently paused`
-                        : `You have already mint to the limit.`}
-                    </button>
-                  ) : (
-                    (
-                      <button
-                        className="mt-5 w-full bg-gradient-to-br from-brand-blue to-brand-green shadow-lg px-6 py-3 rounded-md text-2xl text-white hover:shadow-green-400/50 tracking-wide"
-                        disabled={balanceOfEth >= 2}
-                        onClick={mintHandlerEth}
-                      >
-                        <p className="text-2xl">
-                          {isMintingEth ? 'Minting...' : 'FREE MINT'}
-                        </p>
-                        <span className="text-xs">
-                          (You pay the minting gas fee)
-                        </span>
-                      </button>
-                    ) && (
-                      <p className="text-gray-600 text-sm text-center">
-                        (You already minted {balanceOfEth}/2)
+                      <p className="text-2xl">
+                        {isMintingPoly ? 'Minting...' : 'FREE MINT'}
                       </p>
-                    )
-                  ))
+                      <span className="text-xs">
+                        (You pay the minting gas fee)
+                      </span>
+                    </button>
+                  )
                 ) : (
                   <button
                     className="mt-5 w-full bg-gradient-to-br from-brand-yellow to-brand-pink shadow-lg px-6 py-3 rounded-md text-2xl text-white hover:shadow-yellow-400/50 tracking-wide uppercase"
@@ -340,6 +305,9 @@ const Mint = () => {
                     Connect Wallet
                   </button>
                 )}
+                <p className="text-gray-600 text-sm text-center">
+                  (You already minted {balanceOfPoly}/2)
+                </p>
               </div>
             </div>
 
@@ -351,7 +319,7 @@ const Mint = () => {
 
             {/* contact addres */}
             <div className="border-t border-gray-300 flex flex-col items-center py-2 w-full mt-10">
-              <h3 className="text-xs text-gray-500 mt-6 font-bold">
+              <h3 className="text-xs text-gray-400 mt-6">
                 Ethereum Contract Address
               </h3>
               <a
@@ -364,14 +332,22 @@ const Mint = () => {
                   {config.contractAddressEth}
                 </span>
               </a>
-            </div>
-
-            <div className="border-t border-gray-300 flex flex-col items-center py-2 w-full mt-10">
-              <h3 className="text-xs text-gray-500 mt-6 font-bold">
+              <h3 className="text-xs text-gray-400 mt-6">
                 Polygon Contract Address
               </h3>
               <a
                 href={`https://rinkeby.etherscan.io/address/${config.contractAddressPoly}#readContract`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-gray-500"
+              >
+                <span className="break-all ...">
+                  {config.contractAddressPoly}
+                </span>
+              </a>
+              <h3 className="text-xs text-gray-400 mt-6">Creater</h3>
+              <a
+                href={`https://rinkeby.etherscan.io/address/${config.creater}#readContract`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-gray-500"
