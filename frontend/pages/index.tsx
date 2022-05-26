@@ -5,10 +5,14 @@ import { web3Onboard } from '../utils/onboard'
 import { useConnectWallet, useSetChain, useWallets } from '@web3-onboard/react'
 import { type OnboardAPI } from '@web3-onboard/core'
 import {
-  getTotalMinted,
-  getBalanceOf,
-  isPausedState,
-  mint
+  getTotalMintedPoly,
+  getBalanceOfPoly,
+  isPausedStatePoly,
+  mintPoly,
+  getBalanceOfEth,
+  isPausedStateEth,
+  getTotalMintedEth,
+  mintEth
 } from '../utils/interact'
 import { useInterval } from '../utils/useInterval'
 
@@ -78,11 +82,15 @@ const Mint = () => {
   const [{ chains, connectedChain, settingChain }, setChain] = useSetChain()
   const [onboard, setOnboard] = useState<OnboardAPI>()
 
-  const [status, setStatus] = useState<statusProps>()
-  const [totalMinted, setTotalMinted] = useState<number>(0)
-  const [balanceOf, setBalanceOf] = useState<number>(0)
-  const [paused, setPaused] = useState<number>(0)
-  const [isMinting, setIsMinting] = useState(false)
+  const [statuses, setStatuses] = useState<statusProps[]>([])
+  const [totalMintedPoly, setTotalMintedPoly] = useState<number>(0)
+  const [totalMintedEth, setTotalMintedEth] = useState<number>(0)
+  const [balanceOfPoly, setBalanceOfPoly] = useState<number>(0)
+  const [balanceOfEth, setBalanceOfEth] = useState<number>(0)
+  const [pausedPoly, setPausedPoly] = useState<number>(0)
+  const [pausedEth, setPausedEth] = useState<number>(0)
+  const [isMintingPoly, setIsMintingPoly] = useState(false)
+  const [isMintingEth, setIsMintingEth] = useState(false)
   const [tokenIds, setTokenIds] = useState<number[]>([])
 
   const connectedWallets = useWallets()
@@ -126,10 +134,13 @@ const Mint = () => {
 
   useEffect(() => {
     ;(async () => {
-      const totalMinted = await getTotalMinted()
-      setBalanceOf(await getBalanceOf())
-      setTotalMinted(totalMinted)
-      setPaused(await isPausedState())
+      const totalMinted = await getTotalMintedPoly()
+      setBalanceOfPoly(await getBalanceOfPoly())
+      setBalanceOfEth(await getBalanceOfEth())
+      setTotalMintedPoly(totalMinted)
+      setTotalMintedEth(await getTotalMintedEth())
+      setPausedPoly(await isPausedStatePoly())
+      setPausedEth(await isPausedStateEth())
 
       const imageIdsArray: number[] = []
 
@@ -148,21 +159,58 @@ const Mint = () => {
     })()
   }, [])
 
-  const mintHandler = async () => {
-    setIsMinting(true)
+  const mintHandlerPoly = async () => {
+    setIsMintingPoly(true)
 
-    const { success, status } = await mint()
+    const { success, status } = await mintPoly()
 
-    setStatus({
-      success,
-      message: status
-    })
+    setStatuses([
+      {
+        success,
+        message: status
+      },
+      ...statuses
+    ])
 
     if (success) {
-      setBalanceOf((balanceOf) => Number(balanceOf) + 1)
+      setBalanceOfPoly((balanceOf) => Number(balanceOf) + 1)
     }
 
-    setIsMinting(false)
+    setIsMintingPoly(false)
+  }
+
+  const mintHandlerEth = async () => {
+    setIsMintingEth(true)
+
+    const { success, status } = await mintEth()
+
+    setStatuses([
+      {
+        success,
+        message: status
+      },
+      ...statuses
+    ])
+
+    if (success) {
+      setBalanceOfEth((balanceOf) => Number(balanceOf) + 1)
+    }
+
+    setIsMintingEth(false)
+  }
+
+  const RenderStatus = ({ status }: { status: statusProps }) => {
+    return (
+      <div
+        className={`border ${
+          status.success ? 'border-green-500' : 'border-red-400 '
+        } rounded-md text-start h-full px-4 py-4 w-full mx-auto mt-4`}
+      >
+        <p className="flex flex-col space-y-2 text-gray-500 text-sm md:text-base break-words ...">
+          {status.message}
+        </p>
+      </div>
+    )
   }
 
   return (
@@ -210,7 +258,7 @@ const Mint = () => {
                         height={20}
                       />
                       <span className="ml-2">
-                        {('000' + totalMinted).slice(-3)}{' '}
+                        {('000' + totalMintedPoly).slice(-3)}{' '}
                       </span>{' '}
                       / 300
                     </p>
@@ -226,29 +274,64 @@ const Mint = () => {
                   </div>
                 </div>
                 {wallet ? (
-                  paused || balanceOf >= 2 ? (
+                  (pausedPoly || balanceOfPoly >= 2 ? (
                     <button
                       className="mt-5 w-full bg-gradient-to-br from-gray-600 to-gray-800 shadow-lg px-6 py-3 text-sm rounded-md text-white tracking-wide cursor-default"
-                      disabled={balanceOf >= 2}
+                      disabled={balanceOfPoly >= 2}
                     >
-                      {paused
+                      {pausedPoly
                         ? `Mint is currently paused`
                         : `You have already mint to the limit.`}
                     </button>
                   ) : (
-                    <button
-                      className="mt-5 w-full bg-gradient-to-br from-brand-blue to-brand-green shadow-lg px-6 py-3 rounded-md text-2xl text-white hover:shadow-green-400/50 tracking-wide"
-                      disabled={balanceOf >= 2}
-                      onClick={mintHandler}
-                    >
-                      <p className="text-2xl">
-                        {isMinting ? 'Minting...' : 'FREE MINT'}
+                    (
+                      <button
+                        className="mt-5 w-full bg-gradient-to-br from-brand-blue to-brand-green shadow-lg px-6 py-3 rounded-md text-2xl text-white hover:shadow-green-400/50 tracking-wide"
+                        disabled={balanceOfPoly >= 2}
+                        onClick={mintHandlerPoly}
+                      >
+                        <p className="text-2xl">
+                          {isMintingPoly ? 'Minting...' : 'FREE MINT'}
+                        </p>
+                        <span className="text-xs">
+                          (You pay the minting gas fee)
+                        </span>
+                      </button>
+                    ) && (
+                      <p className="text-gray-600 text-sm text-center">
+                        (You already minted {balanceOfPoly}/2)
                       </p>
-                      <span className="text-xs">
-                        (You pay the minting gas fee)
-                      </span>
+                    )
+                  )) &&
+                  (pausedEth || balanceOfEth >= 2 ? (
+                    <button
+                      className="mt-5 w-full bg-gradient-to-br from-gray-600 to-gray-800 shadow-lg px-6 py-3 text-sm rounded-md text-white tracking-wide cursor-default"
+                      disabled={balanceOfEth >= 2}
+                    >
+                      {pausedPoly
+                        ? `Mint is currently paused`
+                        : `You have already mint to the limit.`}
                     </button>
-                  )
+                  ) : (
+                    (
+                      <button
+                        className="mt-5 w-full bg-gradient-to-br from-brand-blue to-brand-green shadow-lg px-6 py-3 rounded-md text-2xl text-white hover:shadow-green-400/50 tracking-wide"
+                        disabled={balanceOfEth >= 2}
+                        onClick={mintHandlerEth}
+                      >
+                        <p className="text-2xl">
+                          {isMintingEth ? 'Minting...' : 'FREE MINT'}
+                        </p>
+                        <span className="text-xs">
+                          (You pay the minting gas fee)
+                        </span>
+                      </button>
+                    ) && (
+                      <p className="text-gray-600 text-sm text-center">
+                        (You already minted {balanceOfEth}/2)
+                      </p>
+                    )
+                  ))
                 ) : (
                   <button
                     className="mt-5 w-full bg-gradient-to-br from-brand-yellow to-brand-pink shadow-lg px-6 py-3 rounded-md text-2xl text-white hover:shadow-yellow-400/50 tracking-wide uppercase"
@@ -257,48 +340,51 @@ const Mint = () => {
                     Connect Wallet
                   </button>
                 )}
-                <p className="text-gray-600 text-sm mt-3 text-center">
-                  Max Mint Amount: 2
-                </p>
-                {wallet && (
-                  <p className="text-gray-600 text-sm text-center">
-                    (You already minted {balanceOf}/2)
-                  </p>
-                )}
               </div>
             </div>
 
             {/* status */}
-            {status && (
-              <div
-                className={`border ${
-                  status.success ? 'border-green-500' : 'border-brand-pink-400 '
-                } rounded-md text-start h-full px-4 py-4 w-full mx-auto mt-4`}
-              >
-                <p className="flex flex-col space-y-2 text-gray-500 text-sm md:text-base break-words ...">
-                  {status.message}
-                </p>
-              </div>
-            )}
+            {statuses.length > 0 &&
+              statuses.map((status) => {
+                return <RenderStatus status={status} />
+              })}
 
             {/* contact addres */}
             <div className="border-t border-gray-300 flex flex-col items-center py-2 w-full mt-10">
-              <h3 className="text-sm text-gray-500 mt-6 font-bold">
-                Contract Address
+              <h3 className="text-xs text-gray-500 mt-6 font-bold">
+                Ethereum Contract Address
               </h3>
               <a
-                href={`https://rinkeby.etherscan.io/address/${config.contractAddress}#readContract`}
+                href={`https://rinkeby.etherscan.io/address/${config.contractAddressEth}#readContract`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-gray-500"
               >
-                <span className="break-all ...">{config.contractAddress}</span>
+                <span className="break-all ...">
+                  {config.contractAddressEth}
+                </span>
+              </a>
+            </div>
+
+            <div className="border-t border-gray-300 flex flex-col items-center py-2 w-full mt-10">
+              <h3 className="text-xs text-gray-500 mt-6 font-bold">
+                Polygon Contract Address
+              </h3>
+              <a
+                href={`https://rinkeby.etherscan.io/address/${config.contractAddressPoly}#readContract`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-gray-500"
+              >
+                <span className="break-all ...">
+                  {config.contractAddressPoly}
+                </span>
               </a>
             </div>
           </div>
         </div>
         <div className="relative h-80 w-full">
-          {totalMinted > 0 && (
+          {totalMintedPoly > 0 && (
             <>
               {tokenIds.map((imageId, index) => {
                 return (
