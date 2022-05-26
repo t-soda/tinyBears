@@ -18,6 +18,23 @@ module.exports = {
         'brand-green': 'var(--clr-green)',
         'brand-light': 'var(--clr-light)',
         'brand-background': 'var(--clr-background)'
+      },
+      keyframes: {
+        left: {
+          '0%': { right: '10%' },
+          '100%': { right: '90%' }
+        },
+        right: {
+          '0%': { right: '90%' },
+          '100%': { right: '10%' }
+        },
+        updown: {
+          '0%': { top: 0 },
+          '100%': { top: '3px' }
+        }
+      },
+      animation: {
+        updown: 'updown 1s steps(2) infinite'
       }
     }
   },

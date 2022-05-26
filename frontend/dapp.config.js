@@ -1,8 +1,8 @@
 const config = {
   title: 'tiny bears',
-  description: 'A showcase dapp which is built  for you to create your own',
+  description: 'tiny bears are running around the meadow today.',
   price: 0,
-  contractAddress: '0x33fdC37fa09e670d4444a85Bcd625137d0df3837'
+  contractAddress: '0xd7dEa66DfB5d4F475A0aAeBD2BD57D712859379c'
 }
 
 export { config }

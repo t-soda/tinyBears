@@ -1,6 +1,9 @@
 import { init } from '@web3-onboard/react'
 import injectedModule from '@web3-onboard/injected-wallets'
 import walletConnectModule from '@web3-onboard/walletconnect'
+import tinyBearsIcon from '../tinyBearsSvg'
+
+const RPC_URL = process.env.NEXT_PUBLIC_ALCHEMY_RPC_URL
 
 const injected = injectedModule()
 const walletConnect = walletConnectModule()
@@ -12,7 +15,7 @@ const web3Onboard = init({
     //   id: '0x1',
     //   token: 'ETH',
     //   label: 'Ethereum Mainnet',
-    //   rpcUrl: 'https://mainnet.infura.io/v3/ababf9851fd845d0a167825f97eeb12b',
+    //   rpcUrl: 'https://mainnet.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
     // },
     // {
     //   id: '0x3',
@@ -20,23 +23,23 @@ const web3Onboard = init({
     //   label: 'Ethereum Ropsten Testnet',
     //   rpcUrl: 'https://ropsten.infura.io/v3/ababf9851fd845d0a167825f97eeb12b',
     // },
-    {
-      id: '0x4',
-      token: 'rETH',
-      label: 'Ethereum Rinkeby Testnet',
-      rpcUrl: 'https://rinkeby.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
-    }
     // {
-    //   id: '0x89',
-    //   token: 'MATIC',
-    //   label: 'Matic Mainnet',
-    //   rpcUrl: 'https://matic-mainnet.chainstacklabs.com',
+    //   id: '0x4',
+    //   token: 'rETH',
+    //   label: 'Ethereum Rinkeby Testnet',
+    //   rpcUrl: RPC_URL
     // },
+    {
+      id: '0x89',
+      token: 'MATIC',
+      label: 'Matic Mainnet',
+      rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+    }
   ],
   appMetadata: {
-    name: 'Blocknative',
-    icon: '<svg><svg/>',
-    description: 'Demo app for Onboard V2',
+    name: 'tiny bears',
+    icon: tinyBearsIcon,
+    description: 'tiny bears is omnichain and cc0.',
     recommendedInjectedWallets: [
       { name: 'MetaMask', url: 'https://metamask.io' },
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
