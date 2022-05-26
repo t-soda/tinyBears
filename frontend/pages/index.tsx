@@ -8,11 +8,7 @@ import {
   getTotalMintedPoly,
   getBalanceOfPoly,
   isPausedStatePoly,
-  mintPoly,
-  getBalanceOfEth,
-  isPausedStateEth,
-  getTotalMintedEth,
-  mintEth
+  mintPoly
 } from '../utils/interact'
 import { useInterval } from '../utils/useInterval'
 
