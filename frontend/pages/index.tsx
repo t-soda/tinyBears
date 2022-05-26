@@ -136,11 +136,11 @@ const Mint = () => {
     ;(async () => {
       const totalMinted = await getTotalMintedPoly()
       setBalanceOfPoly(await getBalanceOfPoly())
-      setBalanceOfEth(await getBalanceOfEth())
+      // setBalanceOfEth(await getBalanceOfEth())
       setTotalMintedPoly(totalMinted)
-      setTotalMintedEth(await getTotalMintedEth())
+      // setTotalMintedEth(await getTotalMintedEth())
       setPausedPoly(await isPausedStatePoly())
-      setPausedEth(await isPausedStateEth())
+      // setPausedEth(await isPausedStateEth())
 
       const imageIdsArray: number[] = []
 
@@ -179,25 +179,25 @@ const Mint = () => {
     setIsMintingPoly(false)
   }
 
-  const mintHandlerEth = async () => {
-    setIsMintingEth(true)
+  // const mintHandlerEth = async () => {
+  //   setIsMintingEth(true)
 
-    const { success, status } = await mintEth()
+  //   const { success, status } = await mintEth()
 
-    setStatuses([
-      {
-        success,
-        message: status
-      },
-      ...statuses
-    ])
+  //   setStatuses([
+  //     {
+  //       success,
+  //       message: status
+  //     },
+  //     ...statuses
+  //   ])
 
-    if (success) {
-      setBalanceOfEth((balanceOf) => Number(balanceOf) + 1)
-    }
+  //   if (success) {
+  //     setBalanceOfEth((balanceOf) => Number(balanceOf) + 1)
+  //   }
 
-    setIsMintingEth(false)
-  }
+  //   setIsMintingEth(false)
+  // }
 
   const RenderStatus = ({ status }: { status: statusProps }) => {
     return (
@@ -320,23 +320,10 @@ const Mint = () => {
             {/* contact addres */}
             <div className="border-t border-gray-300 flex flex-col items-center py-2 w-full mt-10">
               <h3 className="text-xs text-gray-400 mt-6">
-                Ethereum Contract Address
-              </h3>
-              <a
-                href={`https://rinkeby.etherscan.io/address/${config.contractAddressEth}#readContract`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-gray-500"
-              >
-                <span className="break-all ...">
-                  {config.contractAddressEth}
-                </span>
-              </a>
-              <h3 className="text-xs text-gray-400 mt-6">
                 Polygon Contract Address
               </h3>
               <a
-                href={`https://rinkeby.etherscan.io/address/${config.contractAddressPoly}#readContract`}
+                href={`https://polygonscan.com/address/${config.contractAddressPoly}#readContract`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-gray-500"
@@ -346,16 +333,9 @@ const Mint = () => {
                 </span>
               </a>
               <h3 className="text-xs text-gray-400 mt-6">Creater</h3>
-              <a
-                href={`https://rinkeby.etherscan.io/address/${config.creater}#readContract`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-gray-500"
-              >
-                <span className="break-all ...">
-                  {config.contractAddressPoly}
-                </span>
-              </a>
+              <span className="break-all text-xs text-gray-500">
+                {config.contractAddressPoly}
+              </span>
             </div>
           </div>
         </div>
