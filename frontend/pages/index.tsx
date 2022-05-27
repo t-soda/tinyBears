@@ -129,10 +129,17 @@ const Mint = () => {
   }, [onboard, connect])
 
   useEffect(() => {
+    ;async () => {
+      if (wallet) {
+        setBalanceOfPoly(await getBalanceOfPoly())
+        // setBalanceOfEth(await getBalanceOfEth())
+      }
+    }
+  }, [wallet])
+
+  useEffect(() => {
     ;(async () => {
       const totalMinted = await getTotalMintedPoly()
-      setBalanceOfPoly(await getBalanceOfPoly())
-      // setBalanceOfEth(await getBalanceOfEth())
       setTotalMintedPoly(totalMinted)
       // setTotalMintedEth(await getTotalMintedEth())
       setPausedPoly(await isPausedStatePoly())
