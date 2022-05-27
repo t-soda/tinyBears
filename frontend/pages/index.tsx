@@ -129,12 +129,12 @@ const Mint = () => {
   }, [onboard, connect])
 
   useEffect(() => {
-    ;async () => {
+    ;(async () => {
       if (wallet) {
         setBalanceOfPoly(await getBalanceOfPoly())
         // setBalanceOfEth(await getBalanceOfEth())
       }
-    }
+    })()
   }, [wallet])
 
   useEffect(() => {
