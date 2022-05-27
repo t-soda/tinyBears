@@ -339,7 +339,7 @@ const Mint = () => {
               </a>
               <h3 className="text-xs text-gray-400 mt-6">Creater</h3>
               <span className="break-all text-xs text-gray-500">
-                {config.contractAddressPoly}
+                {config.creater}
               </span>
             </div>
           </div>
