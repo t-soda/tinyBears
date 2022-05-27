@@ -308,9 +308,11 @@ const Mint = () => {
                     Connect Wallet
                   </button>
                 )}
-                <p className="text-gray-600 text-sm text-center">
-                  (You already minted {balanceOfPoly}/2)
-                </p>
+                {wallet && (
+                  <p className="text-gray-600 text-sm text-center">
+                    (You already minted {balanceOfPoly}/2)
+                  </p>
+                )}
               </div>
             </div>
 
