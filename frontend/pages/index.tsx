@@ -33,7 +33,7 @@ const Anime = ({
 
   useEffect(() => {
     setImageUrl(
-      `https://gateway.pinata.cloud/ipfs/QmRo9fH8bdmMnBTdRxnTeoRTY84zW4NG1UU3fNtriUUJoP/${tokenId}.png`
+      `https://gateway.pinata.cloud/ipfs/Qmec5ijgFeMWhLCN7QdWh2DJqEVVzcVKop5JV5DSBjhoGT/${tokenId}.png`
     )
   }, [])
 
